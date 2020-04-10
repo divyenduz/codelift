@@ -166,9 +166,9 @@ export const App = types
         }
       }
 
-      console.error(`codelift could not find React's root container`);
-
-      return null;
+      // Return html element of HTML document
+      const htmlElement = self.document.querySelector("html");
+      return htmlElement;
     }
   }))
   .actions(self => ({

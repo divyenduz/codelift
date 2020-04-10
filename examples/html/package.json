@@ -1,0 +1,12 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^11.3.0"
+  },
+  "scripts": {
+    "dev": "serve -p 3000"
+  }
+}

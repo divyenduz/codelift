@@ -11,6 +11,7 @@
     "build": "cd packages/codelift && yarn build",
     "cra": "cd examples/cra && codelift",
     "next": "cd examples/next && codelift dev",
+    "html": "cd examples/html && codelift dev",
     "release": "auto shipit",
     "test": "echo No Tests"
   },

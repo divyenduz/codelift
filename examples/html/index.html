@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello</title>
+  </head>
+  <body>
+    Hello World
+    <script type="text/javascript">
+      document.domain = window.location.hostname;
+
+      const codelift = (action, ...args) => {
+        window.top.postMessage(
+          {
+            source: "codelift",
+            payload: { action, args },
+          },
+          "*"
+        );
+      };
+
+      codelift(
+        "setPath",
+        window.location.href.split(window.location.origin).pop()
+      );
+
+      // Intercept history methods that don't have a listener
+      ["pushState", "replaceState"].forEach((method) => {
+        const original = window.history[method];
+
+        window.history[method] = (...args) => {
+          original.apply(window.history, args);
+          codelift("syncPath");
+        };
+      });
+
+      window.addEventListener("popstate", () => codelift("syncPath"));
+
+      // @ts-ignore
+      if (module.hot) {
+        // @ts-ignore
+        module.hot.addStatusHandler((status) => {
+          codelift("handleStatus", status);
+        });
+      }
+    </script>
+  </body>
+</html>
